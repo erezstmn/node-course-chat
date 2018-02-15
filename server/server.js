@@ -13,14 +13,25 @@ const io = socketIO(server);
 app.use(express.static(publicPath));
 io.on('connection' , (socket) => {
     console.log('new user connected');
+
+    socket.emit('newMessage', {
+        from:'erezsmtn',
+        text:'Hello',
+        createdAt: 123123
+    });
+    
     socket.on('disconnect', () => {
         console.log('User disconnected');
-    })
-})
+    });
+    socket.on('createMessage',(newMessage) => {
+        console.log('createMessage', newMessage);
+    });
+});
 
   
 server.listen(port, () => {
     console.log(`Server is up on ${port}`);
 });
+
 
 
